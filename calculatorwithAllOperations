@@ -1,0 +1,152 @@
+#include <stdio.h>
+#include <math.h>
+
+// Function prototypes
+void add(int num1, int num2);
+void subtract(int num1, int num2);
+void multiply(int num1, int num2);
+void divide(int num1, int num2);
+void modulo(int num1, int num2);
+double squareRoot(int num);
+void square(int num);
+void cube(int num);
+void sine(float num);
+void cosine(float num);
+void tangent(float num);
+
+int main() {
+    int choice, num1, num2;
+
+    // Input two numbers
+    printf("Enter two numbers: ");
+    scanf("%d %d", &num1, &num2);
+
+    // Display menu of operations
+    printf("Choose operation:\n");
+    printf("1. Addition\n");
+    printf("2. Subtraction\n");
+    printf("3. Multiplication\n");
+    printf("4. Division\n");
+    printf("5. Modulo\n");
+    printf("6. Square Root\n");
+    printf("7. Square\n");
+    printf("8. Cube\n");
+    printf("9. Sine\n");
+    printf("10. Cosine\n");
+    printf("11. Tangent\n");
+    
+    scanf("%d", &choice);
+
+    switch (choice) {
+        case 1:
+            add(num1, num2); // Call the add function
+            break;
+        case 2:
+            subtract(num1, num2); // Call the subtract function
+            break;
+        case 3:
+            multiply(num1, num2); // Call the multiply function
+            break;
+        case 4:
+            divide(num1, num2); // Call the divide function
+            break;
+        case 5:
+            modulo(num1, num2); // Call the modulo function
+            break;
+        case 6:
+            printf("Square Root of %d: %.2lf\n", num1, squareRoot(num1)); // Call the squareRoot function
+            printf("Square Root of %d: %.2lf\n", num2, squareRoot(num2)); // Call the squareRoot function
+            break;
+        case 7:
+            square(num1); // Call the square function
+            square(num2); // Call the square function
+            break;
+        case 8:
+            cube(num1); // Call the cube function
+            cube(num2); // Call the cube function
+            break;
+        case 9:
+            sine(num1); // Call the sine function
+            sine(num2); // Call the sine function
+            break;
+        case 10:
+            cosine(num1); // Call the cosine function
+            cosine(num2); // Call the cosine function
+            break;
+        case 11:
+            tangent(num1); // Call the tangent function
+            tangent(num2); // Call the tangent function
+            break;
+        default:
+            printf("Invalid choice\n");
+    }
+
+    return 0;
+}
+
+// Function definitions...
+
+// Define the new functions here...
+
+// Function to calculate the square of a number
+void square(int num) {
+    printf("Square of %d: %d\n", num, num * num);
+}
+
+// Function to calculate the cube of a number
+void cube(int num) {
+    printf("Cube of %d: %d\n", num, num * num * num);
+}
+
+// Function to calculate the sine of an angle in radians
+void sine(float num) {
+    printf("Sine of %.2f: %.2f\n", num, sin(num));
+}
+
+// Function to calculate the cosine of an angle in radians
+void cosine(float num) {
+    printf("Cosine of %.2f: %.2f\n", num, cos(num));
+}
+
+// Function to calculate the tangent of an angle in radians
+void tangent(float num) {
+    printf("Tangent of %.2f: %.2f\n", num, tan(num));
+}
+
+// Function to calculate the square root of a number and return a double
+double squareRoot(int num) {
+    return sqrt((double)num);
+}
+
+// Function to perform addition
+void add(int num1, int num2) {
+    printf("Sum: %d\n", num1 + num2);
+}
+
+// Function to perform subtraction
+void subtract(int num1, int num2) {
+    printf("Difference: %d\n", num1 - num2);
+}
+
+// Function to perform multiplication
+void multiply(int num1, int num2) {
+    printf("Product: %d\n", num1 * num2);
+}
+
+// Function to perform division
+void divide(int num1, int num2) {
+    if (num2 != 0) {
+        printf("Quotient: %.2lf\n", (double)num1 / num2);
+    } else {
+        printf("Error: Division by zero\n");
+    }
+}
+
+// Function to perform modulo operation
+void modulo(int num1, int num2) {
+    if (num2 != 0) {
+        printf("Modulo: %d\n", num1 % num2);
+    } else {
+        printf("Error: Modulo by zero\n");
+    }
+}
