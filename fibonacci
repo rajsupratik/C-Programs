@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+// Function to generate the Fibonacci series
+void fibonacci(int num);
+
+int main() {
+    int num;
+
+    // Prompt the user to enter the number of terms in the Fibonacci series
+    printf("Enter the number of terms in the Fibonacci series: ");
+    scanf("%d", &num);
+
+    // Display a header for the Fibonacci series
+    printf("Fibonacci series:\n");
+
+    // Call the fibonacci function
+    fibonacci(num);
+
+    return 0;
+}
+
+// Function to generate the Fibonacci series up to 'num' terms
+void fibonacci(int num) {
+    // Initialize the first two terms of the series
+    int a = 0, b = 1;
+
+    // Loop to generate and print the Fibonacci series
+    int i = 0;
+    while (i < num) {
+        // Print the current term
+        printf("%d ", a);
+         i++;
+        // Calculate the next term by adding the previous two terms
+        int next = a + b;
+
+        // Update a and b for the next iteration
+        a = b;
+        b = next;
+    }
+}
