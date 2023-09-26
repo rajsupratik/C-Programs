@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+void reverse(int arr[], int n);
+
+int main() {
+    int i;
+    int arr[] = {1, 2, 3, 4, 5};
+    int size = sizeof(arr) / sizeof(arr[0]); // Calculate the size of the array
+
+    reverse(arr, size); // Pass the array and its size to the reverse function
+
+    for (i = 0; i < size; i++) {
+        printf("the reverse of %d is %d\n", arr[i], arr[i]); // Display the reversed values
+    }
+
+    return 0;
+}
+
+void reverse(int arr[], int n) {
+    int temp;
+    for (int i = 0; i < (n / 2); i++) {
+        temp = arr[i];
+        arr[i] = arr[n - i - 1];
+        arr[n - i - 1] = temp;
+    }
+}
