@@ -1,0 +1,114 @@
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    #define MAX_TASKS 100
+
+    // Structure to represent a task
+    struct Task {
+        int id;
+        int priority;
+        char description[50];
+    };
+
+    // Structure to represent a priority queue
+    struct PriorityQueue {
+        struct Task* tasks[MAX_TASKS];
+        int size;
+    };
+
+    // Function to create a new task
+    struct Task* createTask(int id, int priority, const char* description) {
+        struct Task* task = (struct Task*)malloc(sizeof(struct Task));
+        task->id = id;
+        task->priority = priority;
+        strncpy(task->description, description, sizeof(task->description) - 1);
+        task->description[sizeof(task->description) - 1] = '\0';
+        return task;
+    }
+
+    // Function to create a new priority queue
+    struct PriorityQueue* createPriorityQueue() {
+        struct PriorityQueue* queue = (struct PriorityQueue*)malloc(sizeof(struct PriorityQueue));
+        queue->size = 0;
+        return queue;
+    }
+
+    // Function to swap two tasks in the priority queue
+    void swap(struct Task** a, struct Task** b) {
+        struct Task* temp = *a;
+        *a = *b;
+        *b = temp;
+    }
+
+    // Function to maintain the heap property of the priority queue
+    void heapify(struct PriorityQueue* queue, int i) {
+        int largest = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+
+        if (left < queue->size && queue->tasks[left]->priority > queue->tasks[largest]->priority)
+            largest = left;
+
+        if (right < queue->size && queue->tasks[right]->priority > queue->tasks[largest]->priority)
+            largest = right;
+
+        if (largest != i) {
+            swap(&queue->tasks[i], &queue->tasks[largest]);
+            heapify(queue, largest);
+        }
+    }
+
+    // Function to insert a task into the priority queue
+    void insert(struct PriorityQueue* queue, struct Task* task) {
+        if (queue->size >= MAX_TASKS) {
+            printf("Priority Queue is full. Cannot insert.\n");
+            return;
+        }
+
+        queue->tasks[queue->size] = task;
+        int i = queue->size;
+        queue->size++;
+
+        while (i > 0 && queue->tasks[(i - 1) / 2]->priority < queue->tasks[i]->priority) {
+            swap(&queue->tasks[i], &queue->tasks[(i - 1) / 2]);
+            i = (i - 1) / 2;
+        }
+    }
+
+    // Function to extract the highest priority task from the priority queue
+    struct Task* extractMax(struct PriorityQueue* queue) {
+        if (queue->size <= 0) {
+            printf("Priority Queue is empty.\n");
+            return NULL;
+        }
+
+        struct Task* maxTask = queue->tasks[0];
+        queue->size--;
+
+        if (queue->size > 0) {
+            queue->tasks[0] = queue->tasks[queue->size];
+            heapify(queue, 0);
+        }
+
+        return maxTask;
+    }
+
+    int main() {
+        struct PriorityQueue* taskQueue = createPriorityQueue();
+
+        // Adding tasks with priorities
+        insert(taskQueue, createTask(1, 3, "Coding"));
+        insert(taskQueue, createTask(2, 1, "Testing"));
+        insert(taskQueue, createTask(3, 2, "Making love"));
+
+        // Executing tasks based on priorities
+        while (taskQueue->size > 0) {
+            struct Task* task = extractMax(taskQueue);
+            printf("Executing Task %d: %s (Priority: %d)\n", task->id, task->description, task->priority);
+            free(task);
+        }
+
+        free(taskQueue);
+
+        return 0;
+    }
