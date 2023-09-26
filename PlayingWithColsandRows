@@ -1,0 +1,72 @@
+#include <stdio.h>
+
+// Function prototypes
+void shiftMatrix(int matrix[][4], int rows, int cols, int numShift, char direction);
+
+int main() {
+    int rows = 4;
+    int cols = 5;
+    int numShift;
+    char direction;
+
+    printf("Enter the elements of a 4x5 matrix:\n");
+
+    int myMatrix[4][5]; // Updated matrix size
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            printf("Enter element at position (%d, %d): ", i, j);
+            scanf("%d", &myMatrix[i][j]);
+        }
+    }
+
+    printf("Original matrix:\n");
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            printf("%d ", myMatrix[i][j]);
+        }
+        printf("\n");
+    }
+
+    printf("Do you want to shift rows (R) or columns (C)? ");
+    scanf(" %c", &direction);
+
+    printf("Enter the number of positions to shift: ");
+    scanf("%d", &numShift);
+
+    shiftMatrix(myMatrix, rows, cols, numShift, direction);
+
+    printf("Shifted matrix:\n");
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            printf("%d ", myMatrix[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
+
+void shiftMatrix(int matrix[][4], int rows, int cols, int numShift, char direction) {
+    int temp[rows][cols];
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            temp[i][j] = matrix[i][j];
+        }
+    }
+
+    if (direction == 'R' || direction == 'r') {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                matrix[i][(j + numShift) % cols] = temp[i][j];
+            }
+        }
+    } else if (direction == 'C' || direction == 'c') {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                matrix[(i + numShift) % rows][j] = temp[i][j];
+            }
+        }
+    }
+}
