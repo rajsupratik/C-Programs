@@ -1,0 +1,35 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+long long generateRandomNumber(int numDigits) {
+    long long num = 0;
+    for (int i = 0; i < numDigits; i++) {
+        num = num * 10 + rand() % 10;
+    }
+    return num;
+}
+
+int main() {
+    srand(time(NULL));
+
+    printf("Welcome to the Credit Card Generator\n");
+
+    int numCards;
+    printf("Enter the number of credit card numbers you want to generate: ");
+    scanf("%d", &numCards);
+
+    printf("\nGenerating %d credit card numbers:\n", numCards);
+
+    for (int i = 0; i < numCards; i++) {
+        // Generate a random 16-digit number (simplified)
+        long long cardNumber = generateRandomNumber(16);
+
+        // Print the generated card number
+        printf("Card %d: %lld\n", i + 1, cardNumber);
+    }
+
+    printf("\nThank you for using the Credit Card Generator!\n Now get started with scamming people.");
+
+    return 0;
+}
