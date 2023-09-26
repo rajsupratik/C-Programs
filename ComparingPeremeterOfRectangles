@@ -1,0 +1,50 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+int main() {
+    int length1, length2, length3, breadth1, breadth2, breadth3, r1, r2, r3, max;
+
+    //Taking input for length and breadth for 3 rectangles
+
+    printf("Enter the length and breadth of first rectangle: \n");
+    scanf(" %d %d", &length1, &breadth1);
+
+    printf("Enter the length and breadth of second rectangle: \n");
+    scanf(" %d %d", &length2, &breadth2);
+
+    printf("Enter the length and breadth of third rectangle: \n");
+    scanf(" %d %d", &length3, &breadth3);
+
+    //Applying the formula for Peremeter for rectangle
+
+    r1 = 2*(length1 + breadth1); 
+    r2 = 2*(length2 + breadth2);
+    r3 = 2*(length3 + breadth3);
+
+    printf("The peremeter for the first rectangle is: %d \n", r1);
+    printf("The peremeter for the second rectangle is: %d \n", r2);
+    printf("The peremeter for the third rectangle is: %d \n", r3);
+
+    //using ternary operator
+
+  max = (r1 > r2) ? ((r1 < r3) ? r1 : r3) :((r2 > r3) ? r2 : r3);
+
+  //using if else
+
+//   if (r1 > r2) {
+//     if (r1 < r3) {
+//         max = r1;
+//     } else {
+//         max = r3;
+//     }
+// } else {
+//     if (r2 > r3) {
+//         max = r2;
+//     } else {
+//         max = r3;
+//     }
+// }
+   printf("The biggest rectangle among the three is: %d", max);
+
+   return 0;
+} 
