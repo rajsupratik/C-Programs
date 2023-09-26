@@ -1,0 +1,40 @@
+ #include <stdio.h>
+
+     struct Book {
+     char name[50]; // Use an array to store the name
+     float price;
+     int pages;
+ };
+
+    int main() {
+     // Addresing that there are 3 books that we are taking about
+     struct Book b1, b2, b3;
+
+     printf("Enter name, price, and number of pages of 3 books:\n");
+
+     // For each book, use fgets to read the name (as it can have spaces),
+     // and use scanf for price and pages.
+     printf("Book 1: ");
+     // We are using dot operators that we studied in this class that is used for accesing some particual variable for the structure daTa
+     fgets(b1.name, sizeof(b1.name), stdin);
+     scanf("%f %d", &b1.price, &b1.pages);
+     while (getchar() != '\n'); // Clear the input buffer
+
+     printf("Book 2: ");
+     fgets(b2.name, sizeof(b2.name), stdin);
+     scanf("%f %d", &b2.price, &b2.pages);
+     while (getchar() != '\n'); // Clear the input buffer
+
+     printf("Book 3: ");
+     fgets(b3.name, sizeof(b3.name), stdin);
+     scanf("%f %d", &b3.price, &b3.pages);
+
+     printf("Entered options are:\n");
+
+     printf("Book 1: Name: %s Price: %.2f Pages: %d\n", b1.name, b1.price, b1.pages);
+     printf("Book 2: Name: %s Price: %.2f Pages: %d\n", b2.name, b2.price, b2.pages);
+     printf("Book 3: Name: %s Price: %.2f Pages: %d\n", b3.name, b3.price, b3.pages);
+
+     return 0;
+ }
+
