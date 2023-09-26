@@ -1,0 +1,57 @@
+#include <stdio.h>
+
+void toDecimal(int num);
+void toBinary(int num);
+
+int main() {
+    int num, choice;
+
+    //Taking input for a number
+
+    printf("Enter a number: ");
+    scanf("%d", &num);
+
+    //Taking input for your selection for decimal or binary
+
+    printf("Choose an option:\n");
+    printf("1. Convert to Decimal\n");
+    printf("2. Convert to Binary\n");
+    printf("Enter your choice: ");
+    scanf("%d", &choice);
+
+    // Using the switch case
+
+    switch (choice) {
+        case 1:
+            toDecimal(num);
+            break;
+        case 2:
+            toBinary(num);
+            break;
+        default:
+            printf("Invalid choice\n");
+    }
+
+    return 0;
+}
+
+// function to convert the input to decimal
+
+void toDecimal(int num) {
+    printf("Decimal representation of %d is: %d\n", num, num);
+}
+
+// function to convert the input to binary
+void toBinary(int num) {
+    int temp = num;
+    int binary = 0;
+    int base = 1;
+
+    while (temp > 0) {
+        binary += (temp % 2) * base;
+        temp /= 2;
+        base *= 10;
+    }
+
+    printf("Binary representation of %d is: %d\n", num, binary);
+}
