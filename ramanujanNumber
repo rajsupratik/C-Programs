@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+bool is_ramanujan_number(int n, int *cubes, int num_cubes) {
+    // Check if the given number n can be expressed as the sum of two cubes
+    for (int a = 0; a < num_cubes; a++) {
+        for (int b = a; b < num_cubes; b++) {
+            if (cubes[a] + cubes[b] == n) {
+                return true; // If found, return true
+            } else if (cubes[a] + cubes[b] > n) {
+                break; // If sum is already larger than n, break the inner loop
+            }
+        }
+    }
+    return false; // If no valid sum is found, return false
+}
+
+int main() {
+    int limit;
+    printf("Enter the limit: ");
+    scanf("%d", &limit);
+
+    int num_cubes = 0;
+    int cubes[1000];
+
+    // compute the cube values before hand and store them in the cubes array
+    for (int a = 1; a <= limit; a++) {
+        int cube = a * a * a;
+        if (cube > limit) {
+            break; // Stop if the cube value exceeds the limit
+        }
+        cubes[num_cubes++] = cube; // Store the cube value
+    }
+
+    printf("Ramanujan Numbers up to %d:\n", limit);
+    
+    // Check each number from 2 to the limit
+    for (int number = 2; number <= limit; number++) {
+        // Call the is_ramanujan_number function to check if the number is a Ramanujan number
+        if (is_ramanujan_number(number, cubes, num_cubes)) {
+            printf("%d\n", number); // If yes, print the Ramanujan number
+        }
+    }
+
+    return 0;
+}
