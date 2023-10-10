@@ -1,0 +1,38 @@
+#include<stdio.h>
+
+int binarySearch(int arr[], int size, int target){
+int left = 0;
+int right = size-1;
+
+while (left<=right)
+{
+    int mid = (left+right) / 2;
+
+    if (arr[mid] == target)
+    {
+        return mid;
+    }else if (arr[mid] < left)
+    {
+        int left = mid + 1;
+    }
+    else {
+        int right = mid - 1;
+    }
+}    
+return -1;
+
+}
+
+int main() {
+    int my_list[] = {3, 5, 7, 8, 1, 4, 9, 2};
+    int size = sizeof(my_list)/sizeof(my_list[0]);
+    int target = 8;
+
+    int result = binarySearch(my_list, size, target);
+    if(result != -1){
+        printf("%d is present in %d position",target, result);
+    } else {
+        printf("%d is not present in the list");
+    }
+    return 0;
+}
