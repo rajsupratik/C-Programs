@@ -1,0 +1,107 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Define the structure for a student
+struct Student {
+    int roll;
+    char name[50];
+    int age;
+    struct Student* next;
+};
+
+// Define a pointer type for the structure
+typedef struct Student node;
+
+// Function to create a linked list
+node* createList() {
+    int k, n;
+    node* p;
+    node* head = NULL;
+
+    printf("\nHow many elements to enter: ");
+    scanf("%d", &n);
+
+    for (k = 0; k < n; k++) {
+        node* newNode = (node*)malloc(sizeof(node));
+        printf("\nEnter data for Student %d:\n", k + 1);
+        printf("Roll: ");
+        scanf("%d", &newNode->roll);
+        printf("Name: ");
+        scanf("%s", newNode->name);
+        printf("Age: ");
+        scanf("%d", &newNode->age);
+
+        newNode->next = NULL;
+
+        if (head == NULL) {
+            head = newNode;
+            p = head;
+        } else {
+            p->next = newNode;
+            p = p->next;
+        }
+    }
+    return head;
+}
+
+// Function to insert a new node with a given roll number in sorted order
+node* insertInSortedOrder(node* head, int roll, char name[], int age) {
+    node* newNode = (node*)malloc(sizeof(node));
+    newNode->roll = roll;
+    strcpy(newNode->name, name);
+    newNode->age = age;
+
+    if (head == NULL || roll < head->roll) {
+        newNode->next = head;
+        head = newNode;
+    } else {
+        node* current = head;
+        while (current->next != NULL && current->next->roll < roll) {
+            current = current->next;
+        }
+        newNode->next = current->next;
+        current->next = newNode;
+    }
+
+    return head;
+}
+
+// Function to print the contents of the linked list
+void printList(node* head) {
+    node* current = head;
+    int index = 1;
+
+    while (current != NULL) {
+        printf("\nContents of Student %d:\n", index);
+        printf("Roll: %d\n", current->roll);
+        printf("Name: %s\n", current->name);
+        printf("Age: %d\n", current->age);
+        current = current->next;
+        index++;
+    }
+}
+
+int main() {
+    node* head = NULL;
+    int n, k, roll, age;
+    char name[50];
+
+    printf("\nHow many elements to enter: ");
+    scanf("%d", &n);
+
+    for (k = 0; k < n; k++) {
+        printf("\nEnter data for Student %d:\n", k + 1);
+        printf("Roll: ");
+        scanf("%d", &roll);
+        printf("Name: ");
+        scanf("%s", name);
+        printf("Age: ");
+        scanf("%d", &age);
+        head = insertInSortedOrder(head, roll, name, age);
+    }
+
+    printList(head);
+
+    return 0;
+}
