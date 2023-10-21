@@ -1,0 +1,157 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Student {
+    int roll;
+    char name[50];
+    int age;
+    struct Student* next;
+};
+
+typedef struct Student Student;
+
+// Function to create a student node
+Student* createStudent(int roll, const char* name, int age) {
+    Student* newStudent = (Student*)malloc(sizeof(Student));
+    newStudent->roll = roll;
+    strncpy(newStudent->name, name, sizeof(newStudent->name));
+    newStudent->age = age;
+    newStudent->next = NULL;
+    return newStudent;
+}
+
+// Function to insert a student at the beginning of the list
+Student* insertAtBeginning(Student* head, Student* newStudent) {
+    newStudent->next = head;
+    return newStudent;
+}
+
+// Function to sort the list alphabetically by name
+Student* sortByName(Student* head) {
+    if (head == NULL || head->next == NULL) {
+        return head;
+    }
+
+    Student* sortedList = NULL;
+
+    while (head != NULL) {
+        Student* current = head;
+        head = head->next;
+
+        if (sortedList == NULL || strcmp(current->name, sortedList->name) < 0) {
+            current->next = sortedList;
+            sortedList = current;
+        } else {
+            Student* temp = sortedList;
+            while (temp->next != NULL && strcmp(current->name, temp->next->name) > 0) {
+                temp = temp->next;
+            }
+            current->next = temp->next;
+            temp->next = current;
+        }
+    }
+
+    return sortedList;
+}
+
+// Function to sort the list numerically by roll
+Student* sortByRoll(Student* head) {
+    if (head == NULL || head->next == NULL) {
+        return head;
+    }
+
+    Student* sortedList = NULL;
+
+    while (head != NULL) {
+        Student* current = head;
+        head = head->next;
+
+        if (sortedList == NULL || current->roll < sortedList->roll) {
+            current->next = sortedList;
+            sortedList = current;
+        } else {
+            Student* temp = sortedList;
+            while (temp->next != NULL && current->roll > temp->next->roll) {
+                temp = temp->next;
+            }
+            current->next = temp->next;
+            temp->next = current;
+        }
+    }
+
+    return sortedList;
+}
+
+// Function to print the contents of the linked list
+void printList(Student* head) {
+    Student* current = head;
+    int index = 1;
+
+    while (current != NULL) {
+        printf("\nContents of Student %d:\n", index);
+        printf("Roll: %d\n", current->roll);
+        printf("Name: %s\n", current->name);
+        printf("Age: %d\n", current->age);
+        current = current->next;
+        index++;
+    }
+}
+
+int main() {
+    Student* head = NULL;
+    int n;
+    int sortOption = 0;  // Initialize sortOption to 0
+
+    printf("How many students to enter: ");
+    scanf("%d", &n);
+
+    for (int k = 0; k < n; k++) {
+        int roll, age;
+        char name[50];
+
+        printf("\nEnter data for Student %d:\n", k + 1);
+        printf("Roll: ");
+        scanf("%d", &roll);
+        printf("Name: ");
+        scanf("%s", name);
+        printf("Age: ");
+        scanf("%d", &age);
+
+        Student* newStudent = createStudent(roll, name, age);
+        head = insertAtBeginning(head, newStudent);
+    }
+
+    int continueSorting = 1;  // Initialize continueSorting to 1
+
+    while (continueSorting) {
+        // Use a do-while loop to ensure a valid input
+        do {
+            printf("Sort by (1 for Roll, 0 for Name): ");
+            scanf("%d", &sortOption);
+        } while (sortOption != 0 && sortOption != 1);
+
+        if (sortOption) {
+            head = sortByRoll(head);
+            printf("\nSorted Student List by Roll (Ascending Order):\n");
+        } else {
+            head = sortByName(head);
+            printf("\nSorted Student List by Name (Alphabetical Order):\n");
+        }
+
+        printList(head);
+
+        // Ask if the user wants to sort differently
+        printf("Sort again? (1 for Yes, 0 for No): ");
+        scanf("%d", &continueSorting);
+    }
+
+    // Free allocated memory
+    while (head != NULL) {
+        Student* temp = head;
+        head = head->next;
+        free(temp);
+    }
+
+    return 0;
+}
