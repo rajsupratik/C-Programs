@@ -1,0 +1,71 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Function to find the maximum element in an array
+int findMax(int arr[], int n) {
+    int max = arr[0];
+    for (int i = 1; i < n; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    return max;
+}
+
+// Function to sort elements using the bucket sort algorithm
+void bucketSort(int arr[], int n) {
+    int max = findMax(arr, n);
+    int min = arr[0];
+    
+    // Calculate the range of each bucket
+    int range = (max - min) / n + 1;
+    
+    // Create and initialize buckets
+    int **buckets = (int **)malloc(n * sizeof(int *));
+    for (int i = 0; i < n; i++) {
+        buckets[i] = (int *)malloc(n * sizeof(int));
+    }
+    
+    // Initialize each bucket with 0 elements
+    int bucketSizes[n];
+    for (int i = 0; i < n; i++) {
+        bucketSizes[i] = 0;
+    }
+    
+    // Put elements into buckets
+    for (int i = 0; i < n; i++) {
+        int index = (arr[i] - min) / range;
+        buckets[index][bucketSizes[index]++] = arr[i];
+    }
+    
+    // Sort each bucket and update the original array
+    int index = 0;
+    for (int i = 0; i < n; i++) {
+        if (bucketSizes[i] > 0) {
+            for (int j = 0; j < bucketSizes[i]; j++) {
+                arr[index++] = buckets[i][j];
+            }
+        }
+        free(buckets[i]);
+    }
+    free(buckets);
+}
+
+int main() {
+    int arr[] = {45, 75, 90, 34, 23, 66, 12, 5, 100, 1};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Original array: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    
+    bucketSort(arr, n);
+
+    printf("\nSorted array: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+
+    return 0;
+}
